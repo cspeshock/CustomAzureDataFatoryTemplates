@@ -1,5 +1,5 @@
 {
-	"name": "CopyPipeline_5xw",
+	"name": "CopyPipeline_AzuerBlob_to_ADLSv2",
 	"properties": {
 		"activities": [
 			{

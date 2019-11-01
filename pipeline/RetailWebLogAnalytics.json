@@ -57,7 +57,7 @@
 				"type": "AzureMLBatchExecution",
 				"dependsOn": [
 					{
-						"activity": "Copy",
+						"activity": "dataflow",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -77,7 +77,7 @@
 				"type": "HDInsightSpark",
 				"dependsOn": [
 					{
-						"activity": "Copy",
+						"activity": "dataflow",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -95,7 +95,14 @@
 			{
 				"name": "U-SQL1",
 				"type": "DataLakeAnalyticsU-SQL",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "dataflow",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -109,9 +116,16 @@
 				}
 			},
 			{
-				"name": "DataFlow",
+				"name": "dataflow",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -119,7 +133,13 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow",
+						"type": "DataFlowReference"
+					}
+				}
 			}
 		],
 		"annotations": []

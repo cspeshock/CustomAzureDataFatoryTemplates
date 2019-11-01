@@ -28,7 +28,7 @@
 					"name": "Sort1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tColumn_1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> ClickRetailWebLob_Raw\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Product\nClickRetailWebLob_Raw, Product lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tbroadcast: 'none')~> Lookup1\nLookup1 sort(asc(ERROR_FUNCTION(''), true)) ~> Sort1"
+			"script": "\n\nsource(output(\n\t\tColumn_1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> ClickRetailWebLob_Raw\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Product\nClickRetailWebLob_Raw, Product lookup(ClickRetailWebLob_Raw@Column_1 == Product@Column_1,\n\tbroadcast: 'none')~> Lookup1\nLookup1 sort(asc(ERROR_FUNCTION(''), true)) ~> Sort1"
 		}
 	}
 }

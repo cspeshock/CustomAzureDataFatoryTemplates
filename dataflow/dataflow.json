@@ -19,7 +19,15 @@
 					"name": "Product"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "Lookup1"
@@ -28,7 +36,7 @@
 					"name": "Sort1"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string,\n\t\tColumn_10 as string,\n\t\tColumn_11 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> streamoutput1\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Product\nstreamoutput1, Product lookup(streamoutput1@Column_1 == Product@Column_1,\n\tbroadcast: 'none')~> Lookup1\nLookup1 sort(asc(streamoutput1@Column_2, true)) ~> Sort1"
+			"script": "\n\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string,\n\t\tColumn_10 as string,\n\t\tColumn_11 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> streamoutput1\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Product\nstreamoutput1, Product lookup(streamoutput1@Column_1 == Product@Column_1,\n\tbroadcast: 'none')~> Lookup1\nLookup1 sort(asc(streamoutput1@Column_2, true)) ~> Sort1\nSort1 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
 		}
 	}
 }

@@ -13,7 +13,7 @@
 				"fileName": "products.csv",
 				"fileSystem": "pm-adls-blob-container"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
